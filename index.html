@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AP Stats Survey</title>
+<body style="font-family:sans-serif;text-align:center;margin-top:20vh">
+<p id="msg">Loading your survey...</p>
+<script>
+// Apps Script assigns A/B (50/50), logs it, and returns the form URL.
+var API = "https://script.google.com/macros/s/AKfycbzSfDZ7-hqLfk0jhMi5IwdI3bXBSf1_PNkfRJzGL2faTOZ3slAChnsiO-jTIP8lo_tW/exec";
+fetch(API + "?json=1")
+  .then(function (r) { return r.json(); })
+  .then(function (d) { location.replace(d.url); })
+  .catch(function () {
+    document.getElementById("msg").innerHTML =
+      'Something went wrong. <a href="' + API + '">Click here to continue</a>';
+  });
+</script>
+</body>
