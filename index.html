@@ -3,14 +3,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AP Stats Survey</title>
 <body style="font-family:sans-serif;text-align:center;margin-top:20vh">
-<p id="msg">Loading your survey...</p>
+<p id="msg">Loading your survey... <span id="n">5</span></p>
 <script>
 // Apps Script assigns A/B (50/50), logs it, and returns the form URL.
 var API = "https://script.google.com/macros/s/AKfycbzSfDZ7-hqLfk0jhMi5IwdI3bXBSf1_PNkfRJzGL2faTOZ3slAChnsiO-jTIP8lo_tW/exec";
+// Fake countdown, just shows the page is alive. Sticks at 1 until fetch finishes.
+var n = 5, t = setInterval(function () {
+  if (n > 1) document.getElementById("n").textContent = --n;
+}, 1000);
 fetch(API + "?json=1")
   .then(function (r) { return r.json(); })
   .then(function (d) { location.replace(d.url); })
   .catch(function () {
+    clearInterval(t);
     document.getElementById("msg").innerHTML =
       'Something went wrong. <a href="' + API + '">Click here to continue</a>';
   });
